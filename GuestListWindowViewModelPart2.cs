@@ -35,7 +35,6 @@ namespace GuestApp.ViewModel
 
         public static event EventHandler CloseListWindow;
 
-        public GuestListWindowViewModel() { }
         public GuestListWindowViewModel(IGuestRepository guestRepository, IUsersMessageService usersMessageService)
         {
             _guestRepository = guestRepository;
