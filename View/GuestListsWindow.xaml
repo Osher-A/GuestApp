@@ -1,0 +1,573 @@
+﻿<Window x:Class="GuestApp.View.GuestListsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:GuestApp.View" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:i1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        mc:Ignorable="d"
+        Title="Guest Book" Icon="/View/Images/iconaddressbook.ico"  MinHeight="500"  WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight" FontSize="14" ResizeMode="NoResize">
+    <!--DataContext="{Binding Source ={StaticResource viewModelEntry}, Path=GuestData}">-->
+        <Window.Resources>
+        <x:Array x:Key="RegionComboBox" Type="sys:String">
+            <sys:String>Edgware</sys:String>
+            <sys:String>Golders Green</sys:String>
+            <sys:String>Hendon</sys:String>
+            <sys:String>Prestwich</sys:String>
+            <sys:String>Salford</sys:String>
+            <sys:String>Stamford Hill</sys:String>
+            <sys:String>NA</sys:String>
+        </x:Array>
+
+        <x:Array x:Key="CityComboBox" Type="sys:String">
+            <sys:String>Antwerp</sys:String>
+            <sys:String>Basel</sys:String>
+            <sys:String>Gateshead</sys:String>
+            <sys:String>London</sys:String>
+            <sys:String>Manchester</sys:String>
+            <sys:String>Zurich</sys:String>
+        </x:Array>
+
+        <x:Array x:Key="TitleComboBox" Type="sys:String">
+            <sys:String>Mr &amp; Mrs</sys:String>
+            <sys:String>Mr</sys:String>
+            <sys:String>Mrs</sys:String>
+            <sys:String>Rabbi &amp; Mrs</sys:String>
+            <sys:String>Rabbi</sys:String>
+            <sys:String>Dr &amp; Mrs</sys:String>
+            <sys:String>Dr</sys:String>
+            <sys:String>Ms</sys:String>
+        </x:Array>
+
+        
+        <Style TargetType="TextBox" >
+            <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="SecondColumnTextBox">
+            <Setter Property="Width" Value="62"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="SecondColumnLabel">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,10,62,0"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5,10,3,0"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="117"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="MinWidth" Value="140"/>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="WrapPanel">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="MaxHeight" Value="600"/>
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid Background="LightGray" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Margin="10">
+            <ToolBar DockPanel.Dock="Left" Background="LightGray" >
+            <WrapPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Label Content="_Save As Text:" FontSize="15" Margin="10,0,0,0"
+                           Target="{Binding ElementName=saveButton}" VerticalAlignment="Center" />
+                <Button Name="saveButton" Margin="5" Command="{Binding SaveAsCommand}">
+                    <Image Source="/View/Images/Savegrey16x.png" />
+                </Button>
+            </WrapPanel>
+            <WrapPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Label Content="_Labels:" FontSize="15" VerticalAlignment="Center"
+                           Target="{Binding ElementName=labelButton}" Margin="20,0,0,0" />
+                <Button x:Name="labelButton" Command="{Binding LabelCommand}">
+                    <Button.Content>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" />
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" />
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" Margin="0" />
+                                <Image Source="/View/Images/RectangleTool16x.png" Width="14" Height="8" Margin="0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+            <WrapPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Label Content="_Print:" Margin="20,0,0,0" FontSize="15" Target="{Binding ElementName=printButton}"
+                           VerticalAlignment="Center" />
+                <Button Margin="5" x:Name="printButton" Command="{Binding PrintCommand}"
+                            CommandParameter="{Binding ElementName=ScrollList}">
+                    <Image Source="/View/Images/Print16x.png" />
+                </Button>
+            </WrapPanel>
+            <WrapPanel  Orientation="Horizontal" Margin="0,5,0,0">
+                <Label Content="_Delete Guest:" Margin="20,0,0,0" FontSize="15"
+                           Target="{Binding ElementName=deleteButton}" VerticalAlignment="Center" />
+                <Button Margin="5" x:Name="deleteButton" Command="{Binding DeleteGuestCommand}">
+                    <Image Source="/View/Images/DeleteUser16x.png" />
+                </Button>
+            </WrapPanel>
+                <WrapPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <Label Content="_Change Event:" Margin="20,0,0,0" FontSize="15"
+                           Target="{Binding ElementName=changeEventButton}" VerticalAlignment="Center"/>
+                    <Button Margin="5" x:Name="changeEventButton" Command="{Binding ChangeEventCommand}" >
+                        <Image Source="/View/Images/change_event.png" />
+                    </Button>
+
+                </WrapPanel>
+            </ToolBar>
+
+            <StackPanel DockPanel.Dock="Right" Background="WhiteSmoke" Height="45" Width="300" HorizontalAlignment="Right" Margin="10, 0">
+                <TextBlock  Text="{Binding CurrentEvent.Name, StringFormat=Event Name:  {0}}" HorizontalAlignment="Center"
+                       FontWeight="SemiBold" FontSize="15" Margin="10,0"  />
+                <TextBlock Text="{Binding CurrentEvent.Date, Converter={StaticResource EventDaysRemainingConverter}}" 
+                           HorizontalAlignment="Center"  FontWeight="SemiBold"/>
+                </StackPanel>
+                
+        </DockPanel>
+        
+        <TabControl Grid.Row="1" Grid.RowSpan="2" Background="LightGray"  BorderBrush="Black"
+                    SelectedIndex="{Binding SelectedTabItem}">
+            <TabItem Header="List From All Events">
+                <ScrollViewer Name="ScrollList" VerticalScrollBarVisibility="Auto" >
+                    <DataGrid x:Name="FullListGrid" AutoGenerateColumns="False" ItemsSource="{Binding AllGuests}"
+                              SelectedItem="{Binding SelectedGuest}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CustomizedListCommand}"
+                                                       CommandParameter="{Binding SelectedItems, ElementName=FullListGrid}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding GuestPositionInList}" Width="40" FontWeight="Bold"/>
+                            <DataGridTextColumn Header="Family Name" Binding="{Binding LastName}" />
+                            <DataGridTextColumn Header="First Names" Binding="{Binding FirstNames}" />
+                            <DataGridTemplateColumn Header="Street">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding HouseNumber}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Street}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Region" Binding="{Binding Region}"  />
+                            <DataGridTextColumn Header="City" Binding="{Binding City}" />
+                            <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"  />
+                            <DataGridCheckBoxColumn Header="Family" Binding="{Binding IsFamily}">
+                            </DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </TabItem>
+                <TabItem Header="{Binding CurrentEvent.Name, StringFormat={}{0} List}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="EventListGrid" AutoGenerateColumns="False" ItemsSource="{Binding EventGuests}"
+                              SelectedItem="{Binding SelectedGuest}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomizedListCommand}"
+                                                       CommandParameter="{Binding SelectedItems, ElementName=EventListGrid}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  Binding="{Binding GuestPositionInList}" Width="40" FontWeight="Bold"/>
+                                <DataGridTextColumn Header="Family Name" Binding="{Binding LastName}" />
+                                <DataGridTextColumn Header="First Names" Binding="{Binding FirstNames}" />
+                                <DataGridTemplateColumn Header="Street">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding HouseNumber}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Street}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Region" Binding="{Binding Region}"  />
+                                <DataGridTextColumn Header="City" Binding="{Binding City}" />
+                                <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"  />
+                                <DataGridCheckBoxColumn Header="Family" Binding="{Binding IsFamily}">
+                                </DataGridCheckBoxColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!--<TabItem Header="Family List">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid x:Name="FamilyDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding FamilyGuests}"
+                              SelectedItem="{Binding SelectedGuest}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CustomizedListCommand}"
+                                                       CommandParameter="{Binding SelectedItems, ElementName=FamilyDataGrid}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding GuestPositionInList}" Width="40" FontWeight="Bold"/>
+                            <DataGridTextColumn Header="Family Name" Binding="{Binding LastName}" />
+                            <DataGridTextColumn Header="First Names" Binding="{Binding FirstNames}" />
+                            <DataGridTemplateColumn Header="Street">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding HouseNumber}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Street}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Region" Binding="{Binding Region}"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}" />
+                            <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </TabItem>-->
+            <TabItem Header="Customized List">
+                <Grid MinWidth="898" MinHeight="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0" ItemsSource="{Binding CustomizedList, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedGuest}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="40">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding GuestPositionInList}" FontWeight="Bold"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Family Name" DisplayMemberBinding="{Binding LastName }" />
+                                <GridViewColumn Header="First Names" DisplayMemberBinding="{Binding FirstNames}" />
+                                <GridViewColumn Header="Street">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding HouseNumber}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Street}" TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}" />
+                                <GridViewColumn Header="Region" DisplayMemberBinding="{Binding Region}" />
+                                <GridViewColumn Header="Zip" DisplayMemberBinding="{Binding Zip}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+                        <Button Content="Add To Current Event List" Width="210" Height="38" FontSize="15" Margin="5,5,20,5"
+                                Command="{Binding AddToEventListCommand}"/>
+                        <Button Content="Remove Guest From View List" Width="210" Height="38"  FontSize="15" Margin="5,5,20,5"
+                                Command="{Binding RemoveGuestCommand}"/>
+                        <Button Content="Clear List From View" Width="210" Height="38" FontSize="15" Margin="5"
+                                Command="{Binding ClearListCommand}"/>
+                       
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Search">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Search by Name:" Margin="0,3,0,3" />
+                        <TextBox Width="100" Margin="3"
+                                 Text="{Binding SearchGuest.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding SearchGuestCommand}" Key="Return" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Label Content="Search by Street:" Margin="3,3,0,3" />
+                        <TextBox Width="100" Margin="3"
+                                 Text="{Binding SearchGuest.Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding SearchGuestCommand}" Key="Return" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Label Content=" Search by Region:" Margin="3,3,0,3" />
+                        <ComboBox ItemsSource="{StaticResource RegionComboBox}" Margin="3"
+                                  Text="{Binding SearchGuest.Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBox.InputBindings>
+                                <KeyBinding Command="{Binding SearchGuestCommand}" Key="Return" />
+                            </ComboBox.InputBindings>
+                        </ComboBox>
+                        <Label Content="Search by City:" Margin="3,3,0,3" />
+                        <ComboBox ItemsSource="{StaticResource CityComboBox}" Margin="3"
+                                  Text="{Binding SearchGuest.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBox.InputBindings>
+                                <KeyBinding Command="{Binding SearchGuestCommand}" Key="Return" />
+                            </ComboBox.InputBindings>
+                        </ComboBox>
+                        <Button Height="30" Width="100" BorderBrush="Black" Background="Gray" Margin="20,3"
+                                Command="{Binding SearchGuestCommand}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                    <Label Content="Search" Padding="3" Margin="10,0" Foreground="White"></Label>
+                                    <Image Source="/View/Images/SearchGo16x.png" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <ListView Grid.Row="1" ItemsSource="{Binding SearchGuests}" SelectedItem="{Binding SelectedGuest}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="40">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding GuestPositionInList}" FontWeight="Bold"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Family Name" DisplayMemberBinding="{Binding LastName }" />
+                                <GridViewColumn Header="First Names" DisplayMemberBinding="{Binding FirstNames}" />
+                                <GridViewColumn Header="Street">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding HouseNumber}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Street}" TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}" />
+                                <GridViewColumn Header="Region" DisplayMemberBinding="{Binding Region}" />
+                                <GridViewColumn Header="Zip" DisplayMemberBinding="{Binding Zip}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Edit Details">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="410">
+                    <Grid Background="White" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="117" />
+                            <ColumnDefinition Width="153" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Grid.ColumnSpan="2" Height="35" Width="270" FontSize="18"
+                                FontWeight="DemiBold" Command="{Binding EditGuestCommand}" Grid.Row="1">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Edit Guest Details:" Margin="0" />
+                                <Image Source="/View/Images/Editgrey16x.png" Height="20" Margin="5" />
+                            </StackPanel>
+                        </Button>
+                        <Label Content="Title:" Grid.Row="2" />
+                        <ComboBox x:Name="EditComboBox" Grid.Row="2" Grid.Column="1"
+                                  ItemsSource="{StaticResource TitleComboBox}"
+                                  SelectedItem="{Binding SelectedGuest.GuestTitle , Converter={StaticResource TitleConverter}}"
+                                  VerticalContentAlignment="Center" />
+                        <Label Grid.Row="2" Grid.Column="2" Style="{StaticResource SecondColumnLabel}" Content="Id:" />
+                        <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True" HorizontalContentAlignment="Center"
+                                 Text="{Binding SelectedGuest.Id}" Style="{StaticResource SecondColumnTextBox}"
+                                 FontWeight="Bold" Background="WhiteSmoke" />
+                        <Label Content="First Names:" Grid.Row="3" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="270"
+                                 Text="{Binding SelectedGuest.FirstNames}" />
+                        <Label Content="Last Name:" Grid.Row="4" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Width="117" Text="{Binding SelectedGuest.LastName}" />
+                        <Label Grid.Row="4" Grid.Column="2" Style="{StaticResource SecondColumnLabel}"
+                               Content="House No:" />
+                        <TextBox Grid.Row="4" Grid.Column="2" Style="{StaticResource SecondColumnTextBox}"
+                                 Text="{Binding SelectedGuest.HouseNumber}" HorizontalContentAlignment="Center" />
+                        <Label Content="Street:" Grid.Row="5" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedGuest.Street}"
+                                 Width="270" />
+                        <Label Grid.Row="6" Content="Region:" />
+                        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{StaticResource RegionComboBox}"
+                                  SelectedItem="{Binding SelectedGuest.Region}" />
+                        <Label Grid.Row="6" Grid.Column="2" Style="{StaticResource SecondColumnLabel}" Content="Zip:" />
+                        <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource SecondColumnTextBox}"
+                                 Text="{Binding SelectedGuest.Zip}" />
+                        <Label Grid.Row="7" Content="City:" />
+                        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{StaticResource CityComboBox}"
+                                  SelectedItem="{Binding SelectedGuest.City}" />
+                        <Label Grid.Row="7" Grid.Column="2" Style="{StaticResource SecondColumnLabel}"
+                               Content="Family:" />
+                        <CheckBox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" Margin="0,10,34,10"
+                                  IsChecked="{Binding SelectedGuest.IsFamily}" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Add Guest">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="440" MinHeight="440">
+                    <Grid Background="whiteSmoke">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Title:" Grid.Row="1" />
+                        <ComboBox Grid.Column="1" Width="200" HorizontalContentAlignment="Center"
+                                  ItemsSource="{StaticResource TitleComboBox}"
+                                  SelectedValue="{Binding NewGuest.GuestTitle, Converter={StaticResource TitleConverter}, Mode=TwoWay}"
+                                  Grid.Row="1" />
+                        <Label Grid.Row="2" Content="First Names:" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Width="200"
+                                 Text="{Binding NewGuest.FirstNames, Mode=TwoWay}" />
+                        <Label Grid.Row="3" Content="Last Name:" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Width="200"
+                                 Text="{Binding NewGuest.LastName, Mode=TwoWay}" />
+                        <Label Grid.Row="4" Content="Street:" HorizontalAlignment="Right" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Width="200" Text="{Binding NewGuest.Street, Mode=TwoWay}" />
+                        <Label Grid.Row="5" Content="House Number:" />
+                        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Grid.Row="4" Grid.Column="1" Width="50"
+                                     Text="{Binding NewGuest.HouseNumber, Mode=TwoWay}" />
+                            <Label Grid.Row="4" Content="City:" Margin="5,0,5,0" VerticalAlignment="Center" />
+                            <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{StaticResource CityComboBox}"
+                                      Width="100" Height="30" Text="{Binding NewGuest.City , Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                        <Label Grid.Row="6" Content="Region:" />
+                        <ComboBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"
+                                  ItemsSource="{StaticResource RegionComboBox}" Width="200"
+                                  Text="{Binding NewGuest.Region, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="Not a required field" FontSize="9"
+                                   Foreground="Gray" HorizontalAlignment="Left" />
+                        <Label Grid.Row="8" Content="Zip:" />
+                        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBox Width="50" Text="{Binding NewGuest.Zip, Mode=TwoWay}" />
+                            <Label Content="Family:" VerticalAlignment="Center" Margin="70,0,5,0" />
+                            <CheckBox Margin="0,10" VerticalAlignment="Center"
+                                      IsChecked="{Binding NewGuest.IsFamily, Mode=TwoWay}" />
+                        </StackPanel>
+                        <Button Grid.Row="9" Grid.Column="1" Content="Confirm!" FontSize="18" FontWeight="DemiBold"
+                                Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Background="LightGray" Command="{Binding AddGuestCommand}" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
+

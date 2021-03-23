@@ -1,0 +1,196 @@
+﻿<Window x:Class="GuestApp.View.LabelsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GuestApp.View"
+        mc:Ignorable="d"
+        Title="Labels" Icon="Images/iconaddressbook.ico" Height="1000" Width="800"  WindowStartupLocation="CenterOwner">
+    <!--DataContext="{Binding Source={StaticResource viewModelEntry}, Path=LabelData}">-->
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+        </Style>
+        <Style TargetType="BlockUIContainer">
+            <Setter Property="Padding" Value="0,37,0,0"></Setter>
+        </Style>
+
+            <DataTemplate x:Key="DataTemp">
+                <StackPanel Orientation="Vertical" Height="140">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding GuestTitle , Converter={StaticResource TitleConverter}}"/>
+                        <TextBlock Text="{Binding Initials , StringFormat=' {0} ' }" />
+                        <TextBlock Text="{Binding LastName}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"  >
+                        <TextBlock Text="{Binding HouseNumber}" />
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding Street}" />
+                    </StackPanel>
+                    <TextBlock Text="{Binding City}" />
+                    <TextBlock Text="{Binding Zip}"/>
+                </StackPanel>
+            </DataTemplate>
+    </Window.Resources>
+    <Grid Margin="0,30,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="35"  Content="Print Labels" FontSize="15" Command="{Binding PrintCommand}" CommandParameter="{Binding ElementName=LabelDocument}" Background="LightGray"/>
+        <FlowDocumentReader Grid.Row="1" IsScrollViewEnabled="False" >
+            <FlowDocument x:Name="LabelDocument" ColumnWidth="700" PageWidth="850"  >
+                <BlockUIContainer >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=0}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=1}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate >
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer>
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=1}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=2}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=2}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=3}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=3}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=4}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=4}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=5}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=5}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=6}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=6}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=7}">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=7}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=8}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=8}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=9}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+
+                <BlockUIContainer  >
+                    <ListView  Grid.Row="1" ItemsSource="{Binding GroupsOfGuests, Mode=OneWay, Converter={StaticResource GroupConverter}, ConverterParameter=9}" Visibility="{Binding NumberOfGroups, Converter={StaticResource VisibilityConverter}, ConverterParameter=10}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter ContentTemplate="{StaticResource DataTemp}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </BlockUIContainer>
+            </FlowDocument>
+        </FlowDocumentReader>
+    </Grid>
+</Window>
