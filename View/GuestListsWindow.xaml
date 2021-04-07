@@ -12,6 +12,7 @@
         SizeToContent="WidthAndHeight" FontSize="14" ResizeMode="NoResize">
     <!--DataContext="{Binding Source ={StaticResource viewModelEntry}, Path=GuestData}">-->
         <Window.Resources>
+    
         <x:Array x:Key="RegionComboBox" Type="sys:String">
             <sys:String>Edgware</sys:String>
             <sys:String>Golders Green</sys:String>
@@ -123,7 +124,9 @@
         <Style TargetType="DataGrid">
             <Setter Property="MaxHeight" Value="600"/>
         </Style>
-
+        <Style TargetType="ListView">
+            <Setter Property="MaxHeight" Value="600"/>
+        </Style>
     </Window.Resources>
 
 
@@ -196,7 +199,7 @@
                 </StackPanel>
                 
         </DockPanel>
-        
+
         <TabControl Grid.Row="1" Grid.RowSpan="2" Background="LightGray"  BorderBrush="Black"
                     SelectedIndex="{Binding SelectedTabItem}">
             <TabItem Header="List From All Events">
@@ -237,6 +240,7 @@
                     </DataGrid>
                 </ScrollViewer>
             </TabItem>
+            
                 <TabItem Header="{Binding CurrentEvent.Name, StringFormat={}{0} List}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <DataGrid x:Name="EventListGrid" AutoGenerateColumns="False" ItemsSource="{Binding EventGuests}"
@@ -276,41 +280,7 @@
                     </ScrollViewer>
                 </TabItem>
 
-                <!--<TabItem Header="Family List">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <DataGrid x:Name="FamilyDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding FamilyGuests}"
-                              SelectedItem="{Binding SelectedGuest}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding CustomizedListCommand}"
-                                                       CommandParameter="{Binding SelectedItems, ElementName=FamilyDataGrid}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding GuestPositionInList}" Width="40" FontWeight="Bold"/>
-                            <DataGridTextColumn Header="Family Name" Binding="{Binding LastName}" />
-                            <DataGridTextColumn Header="First Names" Binding="{Binding FirstNames}" />
-                            <DataGridTemplateColumn Header="Street">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding HouseNumber}" />
-                                            <TextBlock Grid.Column="1" Text="{Binding Street}" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Region" Binding="{Binding Region}"/>
-                            <DataGridTextColumn Header="City" Binding="{Binding City}" />
-                            <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </ScrollViewer>
-            </TabItem>-->
+               
             <TabItem Header="Customized List">
                 <Grid MinWidth="898" MinHeight="500">
                     <Grid.RowDefinitions>
@@ -396,7 +366,7 @@
                                 <KeyBinding Command="{Binding SearchGuestCommand}" Key="Return" />
                             </ComboBox.InputBindings>
                         </ComboBox>
-                        <Button Height="30" Width="100" BorderBrush="Black" Background="Gray" Margin="20,3"
+                        <Button Height="30" Width="120" BorderBrush="Black" Background="Gray" Margin="20,3"
                                 Command="{Binding SearchGuestCommand}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top">

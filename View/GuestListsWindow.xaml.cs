@@ -2,6 +2,7 @@
 using GuestApp.DTO;
 using GuestApp.Services;
 using GuestApp.ViewModel;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -16,15 +17,16 @@ namespace GuestApp.View
         public GuestListsWindow()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             GuestListWindowViewModel.CloseListWindow += CloseWindow;
             GuestListWindowViewModel.LabelsWindowHandler += OpenLabelsWindow;
         }
 
         private void OpenLabelsWindow(List<Guest> guestList)
         {
+            var labelsVm = new LabelWindowViewModel(guestList);
             var labelsWindow = new LabelsWindow();
-            labelsWindow.DataContext = new LabelWindowViewModel(guestList);
+            labelsWindow.DataContext = labelsVm;
             labelsWindow.Show();
         }
 

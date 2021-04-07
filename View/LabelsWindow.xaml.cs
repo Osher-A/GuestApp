@@ -1,8 +1,11 @@
 ﻿using GuestApp.DTO;
+using GuestApp.View.CustomControls;
 using GuestApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace GuestApp.View
 {
@@ -15,8 +18,28 @@ namespace GuestApp.View
         {
             InitializeComponent();
 
-            Owner = Application.Current.MainWindow;
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            AddMoreSheetsOfLables();
+
+            LabelWindowViewModel.CloseWindow += Vm_CloseWindow;
         }
+
+        private void AddMoreSheetsOfLables()
+        {
+            foreach (var group in LabelWindowViewModel.GroupsOfGuests)
+            {
+                var sheetOfLabels = new SheetOfLabels();
+                sheetOfLabels.ListView.ItemsSource = group;
+                BlockUIContainer bC = new BlockUIContainer();
+                bC.Padding = new Thickness(0, 37, 0, 0);
+                bC.Child = sheetOfLabels;
+                LabelsFD.Blocks.Add(bC);
+
+            }
+        }
+        private void Vm_CloseWindow(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

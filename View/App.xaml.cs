@@ -51,20 +51,11 @@ namespace GuestApp.View
             var appVM = _container.Get<LoginWindowViewModel>();
             Current.MainWindow = new LogInWindow();
             Current.MainWindow.DataContext = appVM;
+
+            //Current.MainWindow = new EventSelectorWindow();
+            //Current.MainWindow.DataContext = new EventSelectorWindowViewModel(new EventRepository(new User { Id = "SjlIykYCcxQ5aK0FoDvuw1Veyuh2" }));
         }
 
-        //public static Model.Event ModelEventMapper(DTO.Event newEvent)
-        //{
-        //    var config = new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.CreateMap<DTO.Event, Model.Event>();
-        //    });
-        //    IMapper mapper = config.CreateMapper();
-        //    Model.Event modelEvent = mapper.Map<DTO.Event, Model.Event>(newEvent);
-
-        //    return modelEvent;
-        //}
-
-        
+       
     }
 }

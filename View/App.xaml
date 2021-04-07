@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GuestApp.View"
              xmlns:converter="clr-namespace:GuestApp.Utility.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              >
     <Application.Resources>
         <ResourceDictionary>
@@ -12,5 +13,7 @@
             <converter:GuestGroupConverter x:Key="GroupConverter"/>
             <converter:DaysRemainingConverter x:Key="EventDaysRemainingConverter"/>
         </ResourceDictionary>
+
+
     </Application.Resources>
 </Application>

@@ -1,6 +1,7 @@
 ﻿using GuestApp.Extentions;
 using GuestApp.Services;
 using GuestApp.Utility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,13 +15,16 @@ namespace GuestApp.ViewModel
         public static int NumberOfGroups {get; set;}
         public static ObservableCollection<ObservableCollection<DTO.Guest>> GroupsOfGuests { get; set; }
         public ICommand PrintCommand { get; set; }
+        public static event EventHandler CloseWindow;
 
         public LabelWindowViewModel()
         {
                 PrintCommand = new CustomCommand(printLabels, canPrintLabels);
         }
         public LabelWindowViewModel(List<DTO.Guest> labelGuests)
+            :this()
         {
+            
             LabelGuests = labelGuests.ToObservableCollection();
             GroupsOfGuests = new ObservableCollection<ObservableCollection<DTO.Guest>>();
             groupArangement();
@@ -34,8 +38,14 @@ namespace GuestApp.ViewModel
         private void printLabels(object obj)
         {
             PrintLabelsService.PrintLabels(obj);
+            CloseLabelsWindow(this, new EventArgs());
         }
-        
+
+        private  void CloseLabelsWindow(object sender, EventArgs e)
+        {
+            CloseWindow(this, new EventArgs());
+        }
+
         private void groupArangement()
         {
             LabelsDataService labelsDataService = new LabelsDataService(LabelGuests.ToList());

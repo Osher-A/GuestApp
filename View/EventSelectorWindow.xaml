@@ -22,7 +22,7 @@
                 <Setter Property="DockPanel.Dock" Value="Bottom"/>
                 <Setter Property="Width" Value="260"/>
                 <Setter Property="Height" Value="280"/>
-                <Setter Property="Margin" Value="0,0,0,60"/>
+                <Setter Property="Margin" Value="0,0,0,50"/>
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="BorderBrush" Value="DarkGray"/>
                 <Setter Property="Background" Value="White"/>
@@ -35,22 +35,21 @@
                 <Setter Property="FontSize" Value="20"/>
             </Style>
             <Style TargetType="Menu">
-                <Setter Property="Margin" Value="60,0,0,0"/>
-                <Setter Property="Background" Value="WhiteSmoke"/>
                 <Setter Property="Height" Value="20"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-                 <!--DataContext="{Binding Source={StaticResource ViewModel}, Path=EventViewModel}">-->
-    <Grid Background="WhiteSmoke">
+    <!--DataContext="{Binding Source={StaticResource ViewModel}, Path=EventViewModel}">-->
+    <Grid
+        Background="WhiteSmoke">
         <DockPanel>
             <TextBlock DockPanel.Dock="Top"
                        Text="Guest List Organizer"
                        FontWeight="SemiBold"
                        FontSize="25"
                        HorizontalAlignment="Center"
-                       Margin="0,25,0,10"
+                       Margin="0,25,0,40"
                        />
 
             <Button DockPanel.Dock="Bottom"
@@ -72,12 +71,22 @@
                            VerticalAlignment="Center"/>
                 </WrapPanel>
             </Button>
+
             <Border Style="{StaticResource Border}"
-                    Visibility="{Binding EventSelectorWindowVisibility}">
-                <StackPanel>
-                    <StackPanel Width="170"
-                                Margin="40">
-                        <ComboBox x:Name="EventsComboBox"
+                    Visibility="{Binding EventSelectorWindowVisibility, FallbackValue=Collapsed}">
+                <DockPanel>
+                    <Menu 
+                   DockPanel.Dock="Top" >
+                    <MenuItem Header="_Edit details" FontSize="11">
+                        <MenuItem Header="Update Event details" Command="{Binding EditDialogCommand}"/>
+                        <Separator/>
+                        <MenuItem Header="Delete Event details" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
+                    </MenuItem>
+                    </Menu>
+                    <StackPanel >
+                        <StackPanel Width="170"
+                                Margin="40,30,40,40">
+                            <ComboBox x:Name="EventsComboBox"
                                    Width="170"
                                    Height="45"
                                   Margin="0,20,0,0"
@@ -86,38 +95,44 @@
                                    Text="{Binding SelectedEvent.Name, Mode=OneWayToSource}"
                                    VerticalContentAlignment="Center"
                                    FontSize="14.5">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged" >
-                                    <i:InvokeCommandAction Command="{Binding ValidateSelectionCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                        <Button  Width="170"
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged" >
+                                        <i:InvokeCommandAction Command="{Binding ValidateSelectionCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            <Button  Width="170"
                              Height="45"
                              Margin="0,68,0,0"
                              Content="New Event"
                              FontSize="15"
                              Command="{Binding NewEventDialogCommand}"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </DockPanel>
             </Border>
-            <Menu x:Name="Menu"
-                   DockPanel.Dock="Bottom"
-                   Visibility="{Binding EventSelectorWindowVisibility}">
-                <MenuItem Header="_Edit">
-                        <MenuItem Header="Update Event details" Command="{Binding EditDialogCommand}"/>
-                            <Separator/>
-                         <MenuItem Header="Delete Event details" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
-                    </MenuItem>
-                    </Menu>
+
             <Border Style="{StaticResource Border}"
                     Visibility="{Binding CreateAndEditEventWindowVisibility}">
-                <StackPanel Height="276">
-                    
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top"
+                  Visibility="{Binding CreateAndEditEventWindowVisibility}"
+                  VerticalAlignment="Bottom"
+                  FocusManager.IsFocusScope="False">
+                        <MenuItem Header="_Save" >
+                            <MenuItem Header="Save Changes"
+                              Command="{Binding EditEventCommand}">
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Save new Event" Command="{Binding NewEventCommand}"/>
+                        </MenuItem>
+                    </Menu>
+                    <StackPanel Height="276">
+
                     <StackPanel Width="170" >
                         <Label Content="Name Of Event:"
                                FontSize="20"
-                               Margin="0,30,0,0"/>
+                               Margin="0,15,0,0"/>
                         <TextBox  Style="{StaticResource TextBox}"
                                   HorizontalContentAlignment="Left"
                                   VerticalContentAlignment="Center"
@@ -130,7 +145,7 @@
                                 Content=" Scheduled Date:"
                                 FontSize="20"
                                 Padding="0,5"/>
-                            <TextBox 
+                        <TextBox 
                                      MaxLength="10"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
@@ -155,7 +170,7 @@
                                     <i:InvokeCommandAction Command="{Binding ClearTextBoxCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            </TextBox>
+                        </TextBox>
                     </StackPanel>
                     <Button Height="30"
                             Margin="0,20,0,0"
@@ -165,23 +180,13 @@
                             BorderBrush="White"
                             Width="35"
                             Command="{Binding VisibilityCommand}">
-                        <Image Source="/View/Images/left_arrow_24px.png"
+                            <Image Source="/View/Images/left_arrow_24px.png"
                                Height="20"/>
                     </Button>
-                </StackPanel>
+                    </StackPanel>
+                </DockPanel>
             </Border>
-            <Menu DockPanel.Dock="Bottom"
-                  Visibility="{Binding CreateAndEditEventWindowVisibility}"
-                  VerticalAlignment="Bottom"
-                  FocusManager.IsFocusScope="False">
-                <MenuItem Header="_Save" >
-                    <MenuItem Header="Save Changes"
-                              Command="{Binding EditEventCommand}">
-                </MenuItem>
-                <Separator/>
-                    <MenuItem Header="Save new Event" Command="{Binding NewEventCommand}"/>
-                </MenuItem>
-            </Menu>
+           
         </DockPanel>
     </Grid>
 </Window>
