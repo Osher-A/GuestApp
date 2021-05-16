@@ -1,9 +1,6 @@
 ﻿using GuestApp.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GuestApp.Configurations
 {
@@ -13,13 +10,13 @@ namespace GuestApp.Configurations
         {
             builder.HasKey(eg => new { eg.EventId, eg.GuestId });
 
-                builder.HasOne(eg => eg.Event)
-                .WithMany(e => e.EventGuests)
-                .HasForeignKey(eg => eg.EventId);
+            builder.HasOne(eg => eg.Event)
+            .WithMany(e => e.EventGuests)
+            .HasForeignKey(eg => eg.EventId);
 
-                builder.HasOne(eg => eg.Guest)
-                .WithMany(g => g.GuestEvents)
-                .HasForeignKey(eg => eg.GuestId);
+            builder.HasOne(eg => eg.Guest)
+            .WithMany(g => g.GuestEvents)
+            .HasForeignKey(eg => eg.GuestId);
         }
     }
 }

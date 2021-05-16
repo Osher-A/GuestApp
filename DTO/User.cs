@@ -1,8 +1,5 @@
 ﻿using GuestApp.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace GuestApp.DTO
 {
@@ -13,14 +10,14 @@ namespace GuestApp.DTO
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string _email;
-        public string Email 
+        public string Email
         {
             get { return _email; }
-            set 
+            set
             {
                 _email = value;
                 OnPropertyChanged("Email");
-            } 
+            }
         }
 
         internal void OnPropertyChanged(string propertyName)

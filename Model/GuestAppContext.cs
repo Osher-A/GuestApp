@@ -16,10 +16,11 @@ namespace GuestApp.Model
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;Database=GuestBook;Trusted_Connection=True;");
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new GuestConfiguration());
-            modelBuilder.ApplyConfiguration(new CityConfiguration()); 
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
             modelBuilder.ApplyConfiguration(new RegionConfiguration());
             modelBuilder.ApplyConfiguration(new EventGuestConfiguration());
 
@@ -38,10 +39,6 @@ namespace GuestApp.Model
             //    .HasOne(e => e.User)
             //    .WithMany(u => u.Events)
             //    .HasForeignKey(e => e.UserId);
-                
-            
-
         }
-
     }
 }

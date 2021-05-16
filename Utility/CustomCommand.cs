@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GuestApp.Utility
@@ -15,10 +11,10 @@ namespace GuestApp.Utility
         private ICommand selectedEventCommand;
 
         public CustomCommand(Action<object> execute, Predicate<object> canExecute)
-            {
-                this.execute = execute;
-                this.canExecute = canExecute;
-            }
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
 
         public CustomCommand(object canSelecteEvent, ICommand selectedEventCommand)
         {
@@ -33,26 +29,26 @@ namespace GuestApp.Utility
         }
 
         public bool CanExecute(object parameter)
-            {
-                bool b = canExecute == null ? true : canExecute(parameter);
-                return b;
-            }
+        {
+            bool b = canExecute == null ? true : canExecute(parameter);
+            return b;
+        }
 
-            public event EventHandler CanExecuteChanged
+        public event EventHandler CanExecuteChanged
+        {
+            add
             {
-                add
-                {
-                    CommandManager.RequerySuggested += value;
-                }
-                remove
-                {
-                    CommandManager.RequerySuggested -= value;
-                }
+                CommandManager.RequerySuggested += value;
             }
-            public void Execute(object parameter)
+            remove
             {
-                execute(parameter);
+                CommandManager.RequerySuggested -= value;
             }
         }
-    }
 
+        public void Execute(object parameter)
+        {
+            execute(parameter);
+        }
+    }
+}

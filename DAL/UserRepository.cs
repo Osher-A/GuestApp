@@ -1,9 +1,5 @@
-﻿using GuestApp.DTO;
-using GuestApp.Model;
+﻿using GuestApp.Model;
 using GuestApp.Utility;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GuestApp.DAL
 {

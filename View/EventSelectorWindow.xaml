@@ -11,32 +11,32 @@
         Title="Event Selector Window"
         Height="550" Width="400"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" >
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
-            <viewModel:ViewModelLocator x:Key="ViewModel"/>
-            <converter:DateConverter x:Key="Date"/>
-            <converter:EventNameTextBoxConverter x:Key="ClearText"/>
+            <viewModel:ViewModelLocator x:Key="ViewModel" />
+            <converter:DateConverter x:Key="Date" />
+            <converter:EventNameTextBoxConverter x:Key="ClearText" />
 
             <Style TargetType="Border" x:Key="Border">
-                <Setter Property="DockPanel.Dock" Value="Bottom"/>
-                <Setter Property="Width" Value="260"/>
-                <Setter Property="Height" Value="280"/>
-                <Setter Property="Margin" Value="0,0,0,50"/>
-                <Setter Property="BorderThickness" Value="2"/>
-                <Setter Property="BorderBrush" Value="DarkGray"/>
-                <Setter Property="Background" Value="White"/>
+                <Setter Property="DockPanel.Dock" Value="Bottom" />
+                <Setter Property="Width" Value="260" />
+                <Setter Property="Height" Value="280" />
+                <Setter Property="Margin" Value="0,0,0,50" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="Background" Value="White" />
             </Style>
             <Style TargetType="TextBox" x:Key="TextBox">
-                <Setter Property="Width" Value="170"/>
-                <Setter Property="Height" Value="45"/>
-                <Setter Property="BorderBrush" Value="Black"/>
-                <Setter Property="BorderThickness" Value="2"/>
-                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Width" Value="170" />
+                <Setter Property="Height" Value="45" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="FontSize" Value="20" />
             </Style>
             <Style TargetType="Menu">
-                <Setter Property="Height" Value="20"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Height" Value="20" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -49,8 +49,7 @@
                        FontWeight="SemiBold"
                        FontSize="25"
                        HorizontalAlignment="Center"
-                       Margin="0,25,0,40"
-                       />
+                       Margin="0,25,0,40" />
 
             <Button DockPanel.Dock="Bottom"
                     Command="{Binding EventGuestListsCommand}"
@@ -60,30 +59,30 @@
                     Margin="0,0,0,20"
                     Padding="5">
                 <WrapPanel>
-                    <TextBlock 
-                        Text="Go to Guest Lists  " 
-                        FontSize="18" 
+                    <TextBlock
+                        Text="Go to Guest Lists  "
+                        FontSize="18"
                         Margin="25,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center" />
                     <Image Source="/View/Images/SearchGo16x.png"
                            Height="30"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" />
                 </WrapPanel>
             </Button>
 
             <Border Style="{StaticResource Border}"
                     Visibility="{Binding EventSelectorWindowVisibility, FallbackValue=Collapsed}">
                 <DockPanel>
-                    <Menu 
-                   DockPanel.Dock="Top" >
+                    <Menu
+                   DockPanel.Dock="Top">
                     <MenuItem Header="_Edit details" FontSize="11">
-                        <MenuItem Header="Update Event details" Command="{Binding EditDialogCommand}"/>
-                        <Separator/>
-                        <MenuItem Header="Delete Event details" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
+                        <MenuItem Header="Update Event details" Command="{Binding EditDialogCommand}" />
+                        <Separator />
+                        <MenuItem Header="Delete Event details" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}" />
                     </MenuItem>
                     </Menu>
-                    <StackPanel >
+                    <StackPanel>
                         <StackPanel Width="170"
                                 Margin="40,30,40,40">
                             <ComboBox x:Name="EventsComboBox"
@@ -96,8 +95,8 @@
                                    VerticalContentAlignment="Center"
                                    FontSize="14.5">
                                 <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged" >
-                                        <i:InvokeCommandAction Command="{Binding ValidateSelectionCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}"/>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ValidateSelectionCommand}" CommandParameter="{Binding ElementName=EventsComboBox, Path=SelectedIndex}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
@@ -106,7 +105,7 @@
                              Margin="0,68,0,0"
                              Content="New Event"
                              FontSize="15"
-                             Command="{Binding NewEventDialogCommand}"/>
+                             Command="{Binding NewEventDialogCommand}" />
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
@@ -119,51 +118,51 @@
                   Visibility="{Binding CreateAndEditEventWindowVisibility}"
                   VerticalAlignment="Bottom"
                   FocusManager.IsFocusScope="False">
-                        <MenuItem Header="_Save" >
+                        <MenuItem Header="_Save">
                             <MenuItem Header="Save Changes"
                               Command="{Binding EditEventCommand}">
                             </MenuItem>
-                            <Separator/>
-                            <MenuItem Header="Save new Event" Command="{Binding NewEventCommand}"/>
+                            <Separator />
+                            <MenuItem Header="Save new Event" Command="{Binding NewEventCommand}" />
                         </MenuItem>
                     </Menu>
                     <StackPanel Height="276">
 
-                    <StackPanel Width="170" >
+                    <StackPanel Width="170">
                         <Label Content="Name Of Event:"
                                FontSize="20"
-                               Margin="0,15,0,0"/>
+                               Margin="0,15,0,0" />
                         <TextBox  Style="{StaticResource TextBox}"
                                   HorizontalContentAlignment="Left"
                                   VerticalContentAlignment="Center"
                                   Text="{Binding SelectedEvent.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ClearText}}">
                             <TextBox.InputBindings>
-                                <KeyBinding Command="{Binding EventGuestListsCommand}" Key="Return"/>
+                                <KeyBinding Command="{Binding EventGuestListsCommand}" Key="Return" />
                             </TextBox.InputBindings>
                         </TextBox>
                         <Label  Margin="0,30,0,0"
                                 Content=" Scheduled Date:"
                                 FontSize="20"
-                                Padding="0,5"/>
-                        <TextBox 
+                                Padding="0,5" />
+                        <TextBox
                                      MaxLength="10"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
                                      Text="{Binding SelectedEvent.Date, Mode=TwoWay,Converter={StaticResource Date}}">
                             <TextBox.Style>
                                 <Style TargetType="TextBox" BasedOn="{StaticResource TextBox}">
-                                    <Setter Property="Foreground" Value="LightGray"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="Foreground" Value="LightGray" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Style.Triggers>
                                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                            <Setter Property="Foreground" Value="Black"/>
-                                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            <Setter Property="Foreground" Value="Black" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
                             <!--<TextBox.InputBindings>
-                                <KeyBinding Command="{Binding EventGuestListsCommand}" Key="Return"/>
+                                <KeyBinding Command="{Binding EventGuestListsCommand}" Key="Return" />
                             </TextBox.InputBindings>-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="GotFocus">
@@ -181,12 +180,11 @@
                             Width="35"
                             Command="{Binding VisibilityCommand}">
                             <Image Source="/View/Images/left_arrow_24px.png"
-                               Height="20"/>
+                               Height="20" />
                     </Button>
                     </StackPanel>
                 </DockPanel>
             </Border>
-           
         </DockPanel>
     </Grid>
 </Window>

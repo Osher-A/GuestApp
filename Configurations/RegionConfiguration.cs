@@ -9,7 +9,7 @@ namespace GuestApp.Configurations
         public void Configure(EntityTypeBuilder<Region> builder)
         {
             builder.Property(r => r.Id)
-                 .UseIdentityColumn(0,1);
+                 .UseIdentityColumn(0, 1);
 
             builder.Property(r => r.Name)
                 .IsRequired()

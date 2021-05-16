@@ -1,8 +1,6 @@
 ﻿using GuestApp.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace GuestApp.DTO
 {
@@ -15,7 +13,8 @@ namespace GuestApp.DTO
         public string Name
         {
             get { return _name; }
-            set { 
+            set
+            {
                 _name = value;
                 OnPropertyChanged("Name");
             }
@@ -27,7 +26,7 @@ namespace GuestApp.DTO
         {
             get { return _date; }
             set
-            { 
+            {
                 _date = value;
                 OnPropertyChanged("Date");
             }

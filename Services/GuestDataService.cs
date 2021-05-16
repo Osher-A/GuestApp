@@ -1,14 +1,12 @@
 ﻿using GuestApp.DAL;
 using GuestApp.DTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace GuestApp.Services
 {
-    public class GuestDataService 
+    public class GuestDataService
     {
         private IGuestRepository _guestRepository;
         private readonly IUsersMessageService _usersMessageService;
@@ -20,14 +18,14 @@ namespace GuestApp.Services
             _usersMessageService = usersMessageService;
             _currentEvent = currentEvent;
         }
-        
+
         public void EditGuest(DTO.Guest usersSelectedGuestToEdit)
         {
             _guestRepository.UsersSelectedGuestToEdit = usersSelectedGuestToEdit;
             Model.Guest modelGuestToEdit = _guestRepository.ModelGuestToEdit;
             var listOfChanges = ListOfChanges(usersSelectedGuestToEdit, modelGuestToEdit);
             bool canEdit = (listOfChanges.Count > 0) ? UsersConfirmation(listOfChanges) : false;
-            if(canEdit)
+            if (canEdit)
                 _guestRepository.EditGuestDetails();
         }
 
@@ -65,7 +63,7 @@ namespace GuestApp.Services
         {
             if (EmptyFields(newGuest) == true)
                 return;
-            if ( GuestExist(newGuest) == false)
+            if (GuestExist(newGuest) == false)
                 _guestRepository.AddGuest(newGuest);
             else
                 _usersMessageService.GuestExistsElert();
@@ -75,10 +73,10 @@ namespace GuestApp.Services
         {
             if (string.IsNullOrEmpty(newGuest.FirstNames)
                 || string.IsNullOrEmpty(newGuest.LastName)
-                ||string.IsNullOrEmpty(newGuest.HouseNumber)
-                ||string.IsNullOrEmpty(newGuest.Street)
-                ||string.IsNullOrEmpty(newGuest.City)
-                ||string.IsNullOrEmpty(newGuest.Zip))
+                || string.IsNullOrEmpty(newGuest.HouseNumber)
+                || string.IsNullOrEmpty(newGuest.Street)
+                || string.IsNullOrEmpty(newGuest.City)
+                || string.IsNullOrEmpty(newGuest.Zip))
             {
                 _usersMessageService.EmptyFieldsAlert();
                 return true;
@@ -89,9 +87,9 @@ namespace GuestApp.Services
             return false;
         }
 
-        private  bool GuestExist(DTO.Guest newGuest)
+        private bool GuestExist(DTO.Guest newGuest)
         {
-            var allGuests =  _guestRepository.GetEventGuests();
+            var allGuests = _guestRepository.GetEventGuests();
             if (allGuests.Any(g => g.Zip.ToUpper().Replace(" ", string.Empty).Equals(newGuest.Zip.ToUpper().Replace(" ", string.Empty)) && g.HouseNumber == newGuest.HouseNumber) == true)
                 return true;
             else
@@ -111,8 +109,8 @@ namespace GuestApp.Services
 
         private static bool DeleteConfirmation(string eventName)
         {
-           var deleteConfirmation = MessageBox.Show(string.Format("Are you sure you want to permanently" +
-               " delete this guest from {0} guest list ?", eventName), "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            var deleteConfirmation = MessageBox.Show(string.Format("Are you sure you want to permanently" +
+                " delete this guest from {0} guest list ?", eventName), "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             if (deleteConfirmation == MessageBoxResult.OK)
                 return true;
             else

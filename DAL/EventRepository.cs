@@ -1,10 +1,9 @@
 ﻿using GuestApp.Model;
+using GuestApp.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GuestApp.Utility;
-using System.Data.Entity;
-using System.Windows;
+
 
 namespace GuestApp.DAL
 {
@@ -58,7 +57,7 @@ namespace GuestApp.DAL
             {
                 using (var db = new GuestAppContext())
                 {
-                   var eventToRemove = db.Events.Find(eventToDelete.Id);
+                    var eventToRemove = db.Events.Find(eventToDelete.Id);
                     db.Events.Remove(eventToRemove);
                     db.SaveChanges();
                 }

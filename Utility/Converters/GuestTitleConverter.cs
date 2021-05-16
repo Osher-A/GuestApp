@@ -15,27 +15,35 @@ namespace GuestApp.Utility.Converters
                 case GuestTitle.MrAndMrs:
                     title = "Mr & Mrs";
                     break;
+
                 case GuestTitle.Mr:
                     title = "Mr";
                     break;
+
                 case GuestTitle.Mrs:
                     title = "Mrs";
                     break;
+
                 case GuestTitle.RabbiAndMrs:
                     title = "Rabbi & Mrs";
                     break;
+
                 case GuestTitle.Rabbi:
                     title = "Rabbi";
                     break;
+
                 case GuestTitle.DrAndMrs:
                     title = "Dr & Mrs";
                     break;
+
                 case GuestTitle.Dr:
                     title = "Dr";
                     break;
+
                 case GuestTitle.Ms:
                     title = "Ms";
                     break;
+
                 default:
                     goto case GuestTitle.MrAndMrs;
             }
@@ -51,27 +59,35 @@ namespace GuestApp.Utility.Converters
                 case "Mr & Mrs":
                     title = GuestTitle.MrAndMrs;
                     break;
+
                 case "Mr":
                     title = GuestTitle.Mr;
                     break;
+
                 case "Mrs":
                     title = GuestTitle.Mrs;
                     break;
+
                 case "Rabbi & Mrs":
                     title = GuestTitle.RabbiAndMrs;
                     break;
+
                 case "Rabbi":
                     title = GuestTitle.Rabbi;
                     break;
+
                 case "Dr & Mrs":
                     title = GuestTitle.DrAndMrs;
                     break;
+
                 case "Dr":
                     title = GuestTitle.Dr;
                     break;
+
                 case "Ms":
                     title = GuestTitle.Ms;
                     break;
+
                 default:
                     goto case "Mr & Mrs";
             }

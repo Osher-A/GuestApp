@@ -1,7 +1,5 @@
 ﻿using GuestApp.DAL;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GuestApp.Services
 {

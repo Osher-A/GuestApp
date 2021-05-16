@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using GuestApp.View;
 
 namespace GuestApp.DAL
 {
@@ -32,7 +31,7 @@ namespace GuestApp.DAL
                     }
                     catch (Exception ex)
                     {
-                        messageBoxError(ex.Message);
+                        MessageBoxError(ex.Message);
                     }
 
                 return _guestToEdit;
@@ -59,7 +58,7 @@ namespace GuestApp.DAL
                           .ToListAsync();
 
                     var guestList = new List<Guest>();
-                    foreach(var Event in usersEvents)
+                    foreach (var Event in usersEvents)
                     {
                         foreach (var eventGuest in Event.EventGuests)
                             guestList.Add(eventGuest.Guest);
@@ -69,7 +68,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.Message);
+                MessageBoxError(ex.Message);
             }
             return null;
         }
@@ -89,7 +88,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.Message);
+                MessageBoxError(ex.Message);
             }
             return null;
         }
@@ -98,7 +97,7 @@ namespace GuestApp.DAL
         {
             using (var db = new GuestAppContext())
             {
-                var eventGuests =  db.EventsGuests.Where(eg => eg.EventId == _currentEvent.Id).Join(db.Guests,
+                var eventGuests = db.EventsGuests.Where(eg => eg.EventId == _currentEvent.Id).Join(db.Guests,
                     eg => eg.GuestId,
                     g => g.Id,
                     (eventsGuests, guests) =>
@@ -120,7 +119,6 @@ namespace GuestApp.DAL
                 var orderdGuests = eventGuests.OrderBy(jg => jg.LastName).ToList();
                 return orderdGuests.ToDTOGuestList();
             }
-
         }
         public void AddGuest(DTO.Guest newDTOGuest)
         {
@@ -140,7 +138,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.Message);
+                MessageBoxError(ex.Message);
             }
         }
         public void EditGuestDetails()
@@ -161,7 +159,6 @@ namespace GuestApp.DAL
                     "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 throw;
             }
-
         }
         public void RemoveGuestFromCurrentEvent(DTO.Guest selectedGuest)
         {
@@ -176,7 +173,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.InnerException.Message);
+                MessageBoxError(ex.InnerException.Message);
             }
         }
 
@@ -193,7 +190,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.InnerException.Message);
+                MessageBoxError(ex.InnerException.Message);
             }
         }
         private void convertToModelGuest(DTO.Guest DTOGuest, Guest modelGuest)
@@ -208,7 +205,6 @@ namespace GuestApp.DAL
             modelGuest.CityId = (int)GetCityId(DTOGuest.City);
             modelGuest.Zip = DTOGuest.Zip;
             modelGuest.IsFamily = DTOGuest.IsFamily;
-
         }
 
         public int? GetRegionId(string region)
@@ -223,7 +219,7 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.Message);
+                MessageBoxError(ex.Message);
             }
             return null;
         }
@@ -239,16 +235,32 @@ namespace GuestApp.DAL
             }
             catch (Exception ex)
             {
-                messageBoxError(ex.Message);
+                MessageBoxError(ex.Message);
             }
             return null;
         }
 
-        private static void messageBoxError(string exMessage)
+
+        public List<DTO.Guest> SPSearch(DTO.Guest SearchGuest)
         {
-            MessageBox.Show("Sorry, an unexpected error occurred, " + exMessage, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            try
+            {
+                using (var db = new GuestAppContext())
+                {
+                    return db.Guests.FromSqlRaw(String.Format("EXECUTE GuestFinder {0},{1},{2},{3},{4},{5};", _userId, _currentEvent.Id, SearchGuest.FullName, SearchGuest.Street, SearchGuest.City, SearchGuest.Region)).ToList().ToDTOGuestList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBoxError(ex.Message);
+            }
+            return null;
         }
 
+        private static void MessageBoxError(string exMessage)
+        {
+            MessageBox.Show("An unexpected error occurred! " + Environment.NewLine + exMessage, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
 

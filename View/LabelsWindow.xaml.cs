@@ -1,18 +1,15 @@
-﻿using GuestApp.DTO;
-using GuestApp.View.CustomControls;
+﻿using GuestApp.View.CustomControls;
 using GuestApp.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace GuestApp.View
 {
     /// <summary>
     /// Interaction logic for LabelsWindow.xaml
     /// </summary>
-    public partial class LabelsWindow : Window 
+    public partial class LabelsWindow : Window
     {
         public LabelsWindow()
         {
@@ -33,13 +30,12 @@ namespace GuestApp.View
                 bC.Padding = new Thickness(0, 37, 0, 0);
                 bC.Child = sheetOfLabels;
                 LabelsFD.Blocks.Add(bC);
-
             }
         }
+
         private void Vm_CloseWindow(object sender, EventArgs e)
         {
             this.Close();
         }
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
@@ -21,7 +19,6 @@ namespace GuestApp.Utility.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             string dateAsString = (string)value;
             DateTime date;
             bool isValidDate = DateTime.TryParse(dateAsString, out date);
@@ -30,7 +27,7 @@ namespace GuestApp.Utility.Converters
             {
                 MessageBox.Show("Please enter in the correct Format - dd/mm/yyyy", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-                return date;
+            return date;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace GuestApp.ViewModel
     public partial class GuestListWindowViewModel : INotifyPropertyChanged
     {
         private Event _currentEvent;
+
         public Event CurrentEvent
         {
             get { return _currentEvent; }
@@ -18,6 +19,7 @@ namespace GuestApp.ViewModel
         }
 
         private int _selectedTabItem;
+
         public int SelectedTabItem
         {
             get { return _selectedTabItem; }
@@ -28,17 +30,20 @@ namespace GuestApp.ViewModel
             }
         }
 
-        private  ObservableCollection<DTO.Guest> _allGuests;
-        public  ObservableCollection<DTO.Guest>  AllGuests
+        private ObservableCollection<DTO.Guest> _allGuests;
+
+        public ObservableCollection<DTO.Guest> AllGuests
         {
             get { return _allGuests; }
             set
-            { 
+            {
                 _allGuests = value;
                 RaisePropertyChanged("AllGuests");
             }
         }
+
         private ObservableCollection<DTO.Guest> _eventGuests;
+
         public ObservableCollection<DTO.Guest> EventGuests
         {
             get { return _eventGuests; }
@@ -50,6 +55,7 @@ namespace GuestApp.ViewModel
         }
 
         private ObservableCollection<DTO.Guest> _customizedList;
+
         public ObservableCollection<DTO.Guest> CustomizedList
         {
             get { return _customizedList; }
@@ -59,7 +65,9 @@ namespace GuestApp.ViewModel
                 RaisePropertyChanged("CustomizedList");
             }
         }
+
         private ObservableCollection<DTO.Guest> _searchGuests;
+
         public ObservableCollection<DTO.Guest> SearchGuests
         {
             get { return _searchGuests; }
@@ -69,11 +77,11 @@ namespace GuestApp.ViewModel
                 RaisePropertyChanged("SearchGuests");
             }
         }
+
         public static ObservableCollection<DTO.Guest> LabelGuests { get; private set; }
 
-        
-
         private DTO.Guest _selectedGuest = new DTO.Guest();
+
         public DTO.Guest SelectedGuest
         {
             get { return _selectedGuest; }
@@ -83,7 +91,9 @@ namespace GuestApp.ViewModel
                 RaisePropertyChanged("SelectedGuest");
             }
         }
+
         private DTO.Guest _newGuest = new DTO.Guest();
+
         public DTO.Guest NewGuest
         {
             get { return _newGuest; }
@@ -95,6 +105,7 @@ namespace GuestApp.ViewModel
         }
 
         private DTO.Guest _searchGuest = new DTO.Guest();
+
         public DTO.Guest SearchGuest
         {
             get { return _searchGuest; }
@@ -112,6 +123,5 @@ namespace GuestApp.ViewModel
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

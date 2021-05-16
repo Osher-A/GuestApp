@@ -6,135 +6,141 @@
         xmlns:local="clr-namespace:GuestApp.View"
         xmlns:ViewModel="clr-namespace:GuestApp.ViewModel"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:pb="clr-namespace:GuestApp.View" 
+        xmlns:pb="clr-namespace:GuestApp.View"
         mc:Ignorable="d"
         Title="Log in Window" Height="550" Width="400" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ViewModel:LoginWindowViewModel x:Key="vm" />
             <Style TargetType="StackPanel">
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="20,20,20,0"/>
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="20,20,20,0" />
             </Style>
             <Style TargetType="TextBlock">
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
             </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Width" Value="250"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="250" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
             <Style TargetType="PasswordBox">
-                <Setter Property="Width" Value="250"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Height" Value="35"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Width" Value="250" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Height" Value="35" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
             <Style TargetType="Label">
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Width" Value="250"/>
-                <Setter Property="Margin" Value="0,30,0,0"/>
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Width" Value="250" />
+                <Setter Property="Margin" Value="0,30,0,0" />
             </Style>
             <Style TargetType="Button">
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Width" Value="250"/>
-                <Setter Property="Height" Value="35"/>
-                <Setter Property="Margin" Value="0,55,0,50"/>
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Width" Value="250" />
+                <Setter Property="Height" Value="35" />
+                <Setter Property="Margin" Value="0,55,0,50" />
             </Style>
+                <Style TargetType="TextBlock" x:Key="ToggelPB">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=ProgressBar, Path=Visibility}" Value="Visible">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Border BorderThickness="5">
         <Grid Background="WhiteSmoke">
         <!--DataContext="{StaticResource vm}">-->
         <StackPanel Visibility="{Binding LoginWindowVisibility}">
-            <TextBlock Text="Log in" Margin="0,15,0,10"/>
-            <Label  Content="Email:"/>
+            <TextBlock Text="Log in" Margin="0,25,0,20" />
+            <Label  Content="Email:" />
                 <TextBox  Text="{Binding FireBaseUser.Email, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
-                        <KeyBinding Command="{Binding LoginCommand}" Key="Return"/>
+                        <KeyBinding Command="{Binding LoginCommand}" Key="Return" />
                     </TextBox.InputBindings>
                 </TextBox>
                 <Label Content="Password:" />
-                <PasswordBox 
+                <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
                     pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <PasswordBox.InputBindings>
-                        <KeyBinding Command="{Binding LoginCommand}" Key="Return"/>
+                        <KeyBinding Command="{Binding LoginCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
                 </PasswordBox>
-                <Button Content="Register" Command="{Binding RegisterWindowVisibilityCommand}"/>
-                <TextBlock x:Name="Link"
-                           FontSize="15"
-                           HorizontalAlignment="Right"
-                           Margin="0,30,0,0">
+                <Button Content="Register" Command="{Binding RegisterWindowVisibilityCommand}" />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,0">
+                    <TextBlock x:Name="Link"
+                           FontSize="13"
+                           Margin="0,0,40,0"
+                               Style="{StaticResource ToggelPB}">
                     <Hyperlink Command="{Binding ChangePasswordWindowVisibilityCommand}">Change Password</Hyperlink>
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=ProgressBar, Path=Visibility}" Value="Visible">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-                       
+                    </TextBlock>
+                    <TextBlock FontSize="13"
+                               Margin="0"
+                               Style="{StaticResource ToggelPB}">
+                       <Hyperlink Command="{Binding ForgotPasswordCommand}">Forgot Password</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
             </StackPanel>
-            
+
         <StackPanel  Visibility="{Binding RegisterWindowVisibility}">
-                <TextBlock Text="Register"  />
+                <TextBlock Text="Register" />
                 <Label Content="Email:" />
             <TextBox Text="{Binding FireBaseUser.Email, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding RegisterCommand}" Key="Return"/>
+                    <KeyBinding Command="{Binding RegisterCommand}" Key="Return" />
                 </TextBox.InputBindings>
             </TextBox>
             <Label Content="Password:" />
-                <PasswordBox  
+                <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
                     pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <PasswordBox.InputBindings>
-                        <KeyBinding Command="{Binding RegisterCommand}" Key="Return"/>
+                        <KeyBinding Command="{Binding RegisterCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
                 </PasswordBox>
-                <Label Content="Confirm Password:"/>
-                <PasswordBox  
+                <Label Content="Confirm Password:" />
+                <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
                     pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <PasswordBox.InputBindings>
-                        <KeyBinding Command="{Binding RegisterCommand}" Key="Return"/>
+                        <KeyBinding Command="{Binding RegisterCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
                 </PasswordBox>
-                <Button Content="Log in" Command="{Binding LoginWindowVisibilityCommand}"/>
+                <Button Content="Log in" Command="{Binding LoginWindowVisibilityCommand}" />
         </StackPanel>
 
             <StackPanel Visibility="{Binding ChangePasswordWindowVisibility}">
-                <TextBlock Text="Change Password"/>
-                <Label Content="User name:" Margin="0,20,0,0" />
-                <TextBox Text="{Binding FireBaseUser.Email, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                         IsReadOnly="True"/>
-                <Label Content="New Password:" Margin="0,20,0,0"/>
-                <PasswordBox  
+                <TextBlock Text="Change Password" />
+                <Label Content="User name:" Margin="0,50,0,0" />
+                <TextBox Text="{Binding FireBaseUser.Email, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True" />
+                <Label Content="New Password:" Margin="0,20,0,0" />
+                <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
                     pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </PasswordBox>
-                <Label Content="Confirm Password:" Margin="0,20,0,0"/>
-                <PasswordBox  
+                <Label Content="Confirm Password:" Margin="0,20,0,0" />
+                <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
                     pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <PasswordBox.InputBindings>
-                        <KeyBinding Command="{Binding ChangePasswordCommand}" Key="Return"/>
+                        <KeyBinding Command="{Binding ChangePasswordCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
                 </PasswordBox>
                 <Button Content="Log in with New Password"
                         Margin="0,45,0,40"
-                        Command="{Binding ChangePasswordCommand}"/>
-                <TextBlock  HorizontalAlignment="Left"><Hyperlink Name="hyperLink" ToolTip="Back to Login Window" Command="{Binding LoginWindowVisibilityCommand}"><Image Source="..\View\Images\left_arrow_24px.png" Width="25"/></Hyperlink>
+                        Command="{Binding ChangePasswordCommand}" />
+                <TextBlock  HorizontalAlignment="Left"><Hyperlink TextDecorations="None" Name="hyperLink" ToolTip="Back to Login Window" Command="{Binding LoginWindowVisibilityCommand}"><Image Source="..\View\Images\left_arrow_24px.png" Width="25" /></Hyperlink>
                 </TextBlock>
             </StackPanel>
             <ProgressBar x:Name="ProgressBar"
@@ -145,7 +151,7 @@
                                      Minimum="0"
                                      Maximum="100"
                                      VerticalAlignment="Bottom"
-                                     IsIndeterminate="True"/>
+                                     IsIndeterminate="True" />
         </Grid>
     </Border>
 </Window>

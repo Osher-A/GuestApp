@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GuestApp.Model
+﻿namespace GuestApp.Model
 {
     public class EventGuest
     {

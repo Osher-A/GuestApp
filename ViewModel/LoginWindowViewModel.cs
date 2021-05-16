@@ -2,9 +2,7 @@
 using GuestApp.Services;
 using GuestApp.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -58,12 +56,25 @@ namespace GuestApp.ViewModel
         public Visibility ProgressBarVisibility
         {
             get { return _progressBarVisibiliy; }
-            set 
-            { 
+            set
+            {
                 _progressBarVisibiliy = value;
                 OnPropertyChanged("ProgressBarVisibility");
             }
         }
+
+        private string _code;
+
+        public string Code
+        {
+            get { return _code; }
+            set 
+            {
+                _code = value;
+                OnPropertyChanged("Code");
+            }
+        }
+
 
         public ICommand RegisterWindowVisibilityCommand { get; set; }
         public ICommand LoginWindowVisibilityCommand { get; set; }
@@ -71,9 +82,10 @@ namespace GuestApp.ViewModel
         public ICommand RegisterCommand { get; set; }
         public ICommand LoginCommand { get; set; }
         public ICommand ChangePasswordCommand { get; set; }
+        public ICommand ForgotPasswordCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public static event Action<FireBaseUser> RegisterSuccessful;
+        public static event Action<FireBaseUser> EventSelectorWindowHandler;
 
         public LoginWindowViewModel()
         {
@@ -83,8 +95,8 @@ namespace GuestApp.ViewModel
             RegisterCommand = new CustomCommand(Register, CanRegister);
             LoginCommand = new CustomCommand(Login, CanLogin);
             ChangePasswordCommand = new CustomCommand(ChangePassword, CanChangePassword);
+            ForgotPasswordCommand = new CustomCommand(ResetForgottenPassword, CanResetForgottenPassword);
         }
-
 
         private bool CanRegisterWindowBeVisible(object obj)
         {
@@ -113,7 +125,6 @@ namespace GuestApp.ViewModel
             else
                 return false;
         }
-
 
         private async void Register(object obj)
         {
@@ -146,6 +157,20 @@ namespace GuestApp.ViewModel
 
             ToggleProgressBarVisibility();
         }
+
+        private bool CanResetForgottenPassword(object obj)
+        {
+            return !string.IsNullOrWhiteSpace(_user.Email) && string.IsNullOrWhiteSpace(_user.Password);
+        }
+
+        private async void ResetForgottenPassword(object obj)
+        {
+            if(await LoginService.ForgotPassword(_user))
+            {
+                MessageBox.Show("Check your email and click on the link to reset your Password",
+                    "Reset Password", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         private bool CanChangePasswordWindowBeVisible(object obj)
         {
             if (string.IsNullOrWhiteSpace(FireBaseUser.Email) || string.IsNullOrWhiteSpace(FireBaseUser.Password))
@@ -159,7 +184,7 @@ namespace GuestApp.ViewModel
             ToggleProgressBarVisibility();
 
             if (await LoginService.LoginSuccessfull(FireBaseUser))
-            WindowVisibility(WindowType.ChangePasswordWindow);
+                WindowVisibility(WindowType.ChangePasswordWindow);
 
             ToggleProgressBarVisibility();
         }
@@ -189,8 +214,8 @@ namespace GuestApp.ViewModel
 
         public void OpenEventSelectorWindow()
         {
-            if (RegisterSuccessful != null)
-                RegisterSuccessful(FireBaseUser);
+            if (EventSelectorWindowHandler != null)
+                EventSelectorWindowHandler(FireBaseUser); // This event is handled by the EventSelectorWindow View
         }
 
         private void WindowVisibility(WindowType windowType)
@@ -212,7 +237,7 @@ namespace GuestApp.ViewModel
                     break;
             }
         }
-        
+
         private void ToggleProgressBarVisibility()
         {
             ProgressBarVisibility = (ProgressBarVisibility == Visibility.Visible) ? Visibility.Hidden : Visibility.Visible;

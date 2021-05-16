@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GuestApp.Utility.Enums
+﻿namespace GuestApp.Utility.Enums
 {
-    enum RegionEnum
+    internal enum RegionEnum
     {
         NA,
         Edgware,

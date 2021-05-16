@@ -1,9 +1,6 @@
 ﻿using GuestApp.DTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuestApp.Services
 {
@@ -11,11 +8,12 @@ namespace GuestApp.Services
     {
         private List<DTO.Guest> _labelsGuests;
         private const int _guestsPerGroup = 14;
+
         public LabelsDataService(List<DTO.Guest> labelsGuests)
         {
             _labelsGuests = labelsGuests;
         }
-     
+
         public List<List<DTO.Guest>> GroupingGuests()
         {
             int numberOfGroups = NumberOfGroups();
@@ -45,6 +43,5 @@ namespace GuestApp.Services
             }
             return groupsOfGuests;
         }
-
     }
 }

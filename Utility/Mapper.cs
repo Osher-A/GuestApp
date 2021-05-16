@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
-using GuestApp.DTO;
 using GuestApp.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GuestApp.Utility
 {
@@ -34,6 +30,5 @@ namespace GuestApp.Utility
 
             return destinationType;
         }
-
     }
 }

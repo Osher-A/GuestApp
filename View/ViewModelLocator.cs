@@ -15,4 +15,3 @@ namespace GuestApp.View
         public static EventSelectorWindowViewModel EventViewModel { get; set; } = new EventSelectorWindowViewModel(new EventRepository());
     }
 }
-

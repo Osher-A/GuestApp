@@ -1,14 +1,10 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using AutoMapper;
-using GuestApp.DAL;
+﻿using GuestApp.DAL;
 using GuestApp.DTO;
-using GuestApp.Interfaces;
 using GuestApp.Services;
-using GuestApp.View;
 using GuestApp.ViewModel;
 using Ninject;
+using System;
+using System.Windows;
 
 namespace GuestApp.View
 {
@@ -19,7 +15,7 @@ namespace GuestApp.View
     {
         public static User User { get; set; } = new User();
         private IKernel _container;
-       
+
         protected override void OnStartup(StartupEventArgs e)
         {
             try
@@ -28,9 +24,8 @@ namespace GuestApp.View
             }
             catch (System.Exception ex)
             {
-
-                MessageBox.Show(@"Something went wrong:   " + ex.Message
-                    + ex.InnerException, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(@"Something went wrong:   " + Environment.NewLine  + ex.Message
+                    + Environment.NewLine + ex.InnerException, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             ConfigureContainer();
@@ -41,7 +36,7 @@ namespace GuestApp.View
         private void ConfigureContainer()
         {
             this._container = new StandardKernel();
-            _container.Bind<IEventRepository>().To<EventRepository>();  
+            _container.Bind<IEventRepository>().To<EventRepository>();
             _container.Bind<IGuestRepository>().To<GuestRepository>();
             _container.Bind<IUsersMessageService>().To<UsersMessageService>();
         }
@@ -51,11 +46,9 @@ namespace GuestApp.View
             var appVM = _container.Get<LoginWindowViewModel>();
             Current.MainWindow = new LogInWindow();
             Current.MainWindow.DataContext = appVM;
-
-            //Current.MainWindow = new EventSelectorWindow();
-            //Current.MainWindow.DataContext = new EventSelectorWindowViewModel(new EventRepository(new User { Id = "SjlIykYCcxQ5aK0FoDvuw1Veyuh2" }));
+            //var appVM = new EventSelectorWindowViewModel(new EventRepository(new User() { Id = "SjlIykYCcxQ5aK0FoDvuw1Veyuh2" }));
+            //var window = new EventSelectorWindow();
+            //window.DataContext = appVM;
         }
-
-       
     }
 }

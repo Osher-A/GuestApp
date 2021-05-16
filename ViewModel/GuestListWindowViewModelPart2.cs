@@ -1,22 +1,20 @@
-﻿using GuestApp.Extentions;
+﻿using GuestApp.DAL;
+using GuestApp.DTO;
+using GuestApp.Extentions;
 using GuestApp.Services;
 using GuestApp.Utility;
+using GuestApp.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GuestApp.DTO;
 using System.Windows.Input;
-using GuestApp.DAL;
-using GuestApp.View;
-using System.Windows;
-using System.Text;
 
 namespace GuestApp.ViewModel
 {
     public partial class GuestListWindowViewModel
     {
-        private GuestDataService _guestDataService ;
+        private GuestDataService _guestDataService;
         private SearchGuestService _searchGuestService;
         private IGuestRepository _guestRepository;
 
@@ -27,21 +25,21 @@ namespace GuestApp.ViewModel
         public ICommand LabelCommand { get; set; }
         public ICommand PrintCommand { get; set; }
         public ICommand SaveAsCommand { get; set; }
-        public ICommand CustomizedListCommand { get; set; }                                                                                                     
+        public ICommand CustomizedListCommand { get; set; }
         public ICommand ClearListCommand { get; set; }
-        public ICommand RemoveGuestCommand { get; set;} 
+        public ICommand RemoveGuestCommand { get; set; }
         public ICommand AddToEventListCommand { get; set; }
         public ICommand ChangeEventCommand { get; set; }
 
         public static event EventHandler CloseListWindow;
 
-        public static Action<List<Guest>> LabelsWindowHandler;
-
+        public static event Action<List<Guest>> LabelsWindowHandler;
+        
         public GuestListWindowViewModel(IGuestRepository guestRepository, IUsersMessageService usersMessageService, Event currentEvent = null)
         {
             CurrentEvent = currentEvent;
             _guestRepository = guestRepository;
-           _guestDataService = new GuestDataService(guestRepository, usersMessageService);
+            _guestDataService = new GuestDataService(guestRepository, usersMessageService);
             _searchGuestService = new SearchGuestService(guestRepository);
             CustomizedList = new ObservableCollection<Guest>();
 
@@ -59,13 +57,13 @@ namespace GuestApp.ViewModel
             ChangeEventCommand = new CustomCommand(ChangeEvent, CanChangeEvent);
 
 
-           LoadData();
+            LoadData();
         }
 
 
         private bool CanAddGuest(object obj)
         {
-             return true;
+            return true;
         }
 
         private void AddGuest(object obj)
@@ -101,7 +99,7 @@ namespace GuestApp.ViewModel
             if (SelectedTabItem == 0)
                 _guestDataService.DeleteGuestFromAllEvents(SelectedGuest);
             else
-            _guestDataService.RemoveGuestFromCurrentEvent(SelectedGuest);
+                _guestDataService.RemoveGuestFromCurrentEvent(SelectedGuest);
             LoadData();
         }
 
@@ -112,7 +110,7 @@ namespace GuestApp.ViewModel
 
         private async void GuestSearcher(object obj)
         {
-            var search =  await _searchGuestService.SearchListAsync(this.SearchGuest);
+            var search = await _searchGuestService.SearchListAsync(this.SearchGuest);
             if (search.GuestExists == true)
                 this.SearchGuests = search.SearchList.ToObservableCollection();
             this.SearchGuest = new DTO.Guest();
@@ -186,7 +184,7 @@ namespace GuestApp.ViewModel
 
         private bool CanRemoveGuest(object obj)
         {
-            return this.CustomizedList.Count > 0;   
+            return this.CustomizedList.Count > 0;
         }
 
         private void RemoveGuest(object obj)
@@ -215,16 +213,15 @@ namespace GuestApp.ViewModel
         {
             //App.Current.Windows.OfType<GuestListsWindow>().ElementAt(0).Close();
             if (CloseListWindow != null)
-                CloseListWindow(this, EventArgs.Empty);
+                CloseListWindow(this, EventArgs.Empty); // This event is handled by the GuestListsWindow View
             App.Current.MainWindow.Show();
-
         }
-        
-        private  void LoadData()
+
+        private void LoadData()
         {
-             this.AllGuests = (_searchGuestService.GetAllGuests()).ToObservableCollection();
-            if(CurrentEvent.Id != 0)
-            this.EventGuests = (_searchGuestService.GetEventGuests(CurrentEvent.Id)).ToObservableCollection();
+            this.AllGuests = (_searchGuestService.GetAllGuests()).ToObservableCollection();
+            if (CurrentEvent.Id != 0)
+                this.EventGuests = (_searchGuestService.GetEventGuests(CurrentEvent.Id)).ToObservableCollection();
             this.CustomizedList.Clear();
         }
     }

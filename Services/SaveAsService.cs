@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GuestApp.Services
 {
@@ -20,7 +18,7 @@ namespace GuestApp.Services
                 sb.Append(guest1.FullName.PadRight(45, ' '));
                 sb.Append("Address: ");
                 sb.Append(guest1.HouseNumber.PadRight(4, ' '));
-                sb.Append(guest1.Street.PadRight(35,' '));
+                sb.Append(guest1.Street.PadRight(35, ' '));
                 sb.Append(guest1.City);
                 sb.Append("  ");
                 sb.Append(guest1.Zip);
@@ -35,4 +33,3 @@ namespace GuestApp.Services
         }
     }
 }
-

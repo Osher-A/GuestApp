@@ -2,11 +2,9 @@
 using GuestApp.DTO;
 using GuestApp.Services;
 using GuestApp.Utility;
-using GuestApp.View;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,6 +18,7 @@ namespace GuestApp.ViewModel
         private EventDataService _eventDataService;
         private Visibility _eventSelectorWindowVisibility = Visibility.Visible;
         private const string _comboBoxDefaultText = "Please select an Event";
+
         public Visibility EventSelectorWindowVisibility
         {
             get { return _eventSelectorWindowVisibility; }
@@ -29,7 +28,9 @@ namespace GuestApp.ViewModel
                 RaisePropertyChanged("EventSelectorWindowVisibility");
             }
         }
+
         private Visibility _createAndEditEventWindowVisibility = Visibility.Collapsed;
+
         public Visibility CreateAndEditEventWindowVisibility
         {
             get { return _createAndEditEventWindowVisibility; }
@@ -42,6 +43,7 @@ namespace GuestApp.ViewModel
         }
 
         private DTO.Event _selectedEvent;
+
         public DTO.Event SelectedEvent
         {
             get { return _selectedEvent; }
@@ -51,11 +53,13 @@ namespace GuestApp.ViewModel
                 RaisePropertyChanged("SelectedEvent");
             }
         }
+
         private ObservableCollection<string> _eventsNames;
+
         public ObservableCollection<string> EventsNames
         {
             get { return _eventsNames; }
-            set 
+            set
             {
                 _eventsNames = value;
                 RaisePropertyChanged("EventsNames");
@@ -78,9 +82,10 @@ namespace GuestApp.ViewModel
         public ICommand ValidateSelectionCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public static Action<string,Event> ListDialogHandler;
-        
-         public EventSelectorWindowViewModel(IEventRepository eventRepository)
+
+        public static event Action<string, Event> ListDialogHandler;
+
+        public EventSelectorWindowViewModel(IEventRepository eventRepository)
         {
             _userId = EventRepository.User.Id;
             _eventRepository = eventRepository;
@@ -101,8 +106,10 @@ namespace GuestApp.ViewModel
         private bool CanSelectEventList(object obj)
         {
             //The second option is needed to cover for a case when the comboBox wasn't selected but a new event has been created
+            //The last condition is need for a case when an event has been edited, but has not been saved.                  
 
-           if (_selectionValidated == true || (SelectedEvent.Name != _comboBoxDefaultText && SelectedEvent.Name != null) )
+            if ((_selectionValidated || (SelectedEvent.Name != _comboBoxDefaultText && SelectedEvent.Name != null))
+                && !_canCreateNewEvent)
                 return true;
             else
                 return false;
@@ -116,7 +123,7 @@ namespace GuestApp.ViewModel
             CreateAndEditEventWindowVisibility = Visibility.Collapsed;
 
             if (ListDialogHandler != null)
-                ListDialogHandler(_userId,_currentEvent);
+                ListDialogHandler(_userId, _currentEvent); // This event would be handled by the Labels View
         }
 
         private bool CanCreateNewEventDialog(object obj)
@@ -169,7 +176,7 @@ namespace GuestApp.ViewModel
             _eventDataService.AddEvent(SelectedEvent);
 
             //The order here is critical because after LoadEvenNames() is called, the SelectedEvent gets changed. The original
-            //SelectedEvent is needed later in order to be able to edit immediately after creating the new event. 
+            //SelectedEvent is needed later in order to be able to edit immediately after creating the new event.
 
             var newEvent = _eventDataService.GetEvent(SelectedEvent.Name);
             LoadEventNames();
@@ -191,15 +198,16 @@ namespace GuestApp.ViewModel
         private void DeleteEvent(object obj)
         {
             int selectedIndex = (int)obj;
-           var usersConfirmation = MessageBox.Show(string.Format("Are you sure you would like to delete all {0} details?", SelectedEvent.Name), "Warning!", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            var usersConfirmation = MessageBox.Show(string.Format("Are you sure you would like to delete all {0} details?", SelectedEvent.Name), "Warning!", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             if (usersConfirmation == MessageBoxResult.OK)
             {
-                 _eventDataService.DeleteEvent(SelectedEvent.Name);
+                _eventDataService.DeleteEvent(SelectedEvent.Name);
                 EventsNames.RemoveAt(selectedIndex);
 
                 LoadEventNames();
             }
         }
+
         private bool CanClearDateTextBox(object obj)
         {
             if (SelectedEvent.Name != null)
@@ -226,7 +234,7 @@ namespace GuestApp.ViewModel
             _eventDataService.EditEvent(_eventToEdit, SelectedEvent);
             var editedEvent = _eventDataService.GetEvent(SelectedEvent.Name);
             LoadEventNames();
-            SelectedEvent.Name  = editedEvent.Name;
+            SelectedEvent.Name = editedEvent.Name;
             SelectedEvent.Date = editedEvent.Date;
 
             _canEditEventDetails = false;
@@ -264,7 +272,7 @@ namespace GuestApp.ViewModel
                 _currentEvent = currentEvent;
             else
                 _currentEvent = SelectedEvent;
-        } 
+        }
 
         private void LoadEventNames()
         {

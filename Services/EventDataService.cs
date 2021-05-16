@@ -1,8 +1,7 @@
 ﻿using GuestApp.DAL;
 using GuestApp.DTO;
-using GuestApp.View;
-using System.Collections.Generic;
 using GuestApp.Utility;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GuestApp.Services
@@ -17,7 +16,7 @@ namespace GuestApp.Services
             _eventRepository = eventRepository;
             _events = _eventRepository.GetAllEvents();
         }
-        public  void AddEvent(DTO.Event Event)
+        public void AddEvent(DTO.Event Event)
         {
             if (!_events.Exists(e => e.Name.ToUpper().Trim() == Event.Name.ToUpper().Trim()))
             {
@@ -26,25 +25,25 @@ namespace GuestApp.Services
             }
         }
 
-        public  void EditEvent(DTO.Event eventToEdit, DTO.Event modifiedEvent)
+        public void EditEvent(DTO.Event eventToEdit, DTO.Event modifiedEvent)
         {
             var modelEventToEdit = _events.Find(e => e.Name == eventToEdit.Name);
-            if(modelEventToEdit != null)
-            _eventRepository.EditEvent(eventToEdit, modifiedEvent);
+            if (modelEventToEdit != null)
+                _eventRepository.EditEvent(eventToEdit, modifiedEvent);
             _events = _eventRepository.GetAllEvents();
         }
 
         public void DeleteEvent(string eventName)
         {
             var modelEventToDelete = _events.SingleOrDefault(e => e.Name == eventName);
-            if(modelEventToDelete != null)
-            _eventRepository.DeleteEvent(modelEventToDelete);
+            if (modelEventToDelete != null)
+                _eventRepository.DeleteEvent(modelEventToDelete);
             _events = _eventRepository.GetAllEvents();
         }
 
         public DTO.Event GetEvent(string eventToFind)
         {
-            var modelEvent =_events.Find(e => e.Name == eventToFind);
+            var modelEvent = _events.Find(e => e.Name == eventToFind);
             var dtoEvent = Mapper.EventMapper(modelEvent, new DTO.Event());
 
             return dtoEvent;

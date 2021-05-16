@@ -2,8 +2,6 @@
 using GuestApp.DTO;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +30,7 @@ namespace GuestApp.Services
 
         public static async Task<bool> LoginSuccessfull(FireBaseUser user)
         {
+           
             const string urlEndPoint = "signInWithPassword";
             return await IsValidRequest(user, urlEndPoint);
         }
@@ -42,6 +41,13 @@ namespace GuestApp.Services
             return await IsValidRequest(user, urlEndPoint, user.NewPassword);
         }
 
+        public static async Task<bool> ForgotPassword(FireBaseUser user)
+        {
+            const string urlEndPoint = "sendOobCode";
+            return await IsValidRequest(user, urlEndPoint);
+        }
+
+       
         private static bool BothPasswordsMatch(FireBaseUser user)
         {
             if (user.Password.Trim() != user.Password2.Trim())
@@ -72,9 +78,10 @@ namespace GuestApp.Services
                 }
                 else
                     DisplayError(response);
-              return false;
+                return false;
             }
         }
+
         private static StringContent SetContent(FireBaseUser user, string newPassword = null)
         {
             var body = new
@@ -82,9 +89,19 @@ namespace GuestApp.Services
                 email = user.Email,
                 idToken = user.IdToken,
                 password = (newPassword == null) ? user.Password : newPassword,
-                returnSecureToken = (newPassword == null) ? true : false
+                returnSecureToken = (newPassword == null) ? true : false,
             };
 
+            var forgotPWBody = new { requestType = "PASSWORD_RESET", email = user.Email};
+
+            if (string.IsNullOrWhiteSpace(user.Password))
+                return SerializeBody(forgotPWBody);
+            else
+                return SerializeBody(body);
+        }
+
+        private static StringContent SerializeBody(dynamic body)
+        {
             string bodyJson = JsonConvert.SerializeObject(body);
             var data = new StringContent(bodyJson, Encoding.UTF8, "application/json");
             return data;
@@ -114,8 +131,8 @@ namespace GuestApp.Services
             var user = new FireBaseUser();
             string resultJson = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<FirebaseResult>(resultJson);
-            user.Id = result.localId;
-            user.IdToken = result.idToken;
+            user.Id = result.LocalId;
+            user.IdToken = result.IdToken;
             return user;
         }
 

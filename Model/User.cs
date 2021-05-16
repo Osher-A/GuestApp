@@ -1,11 +1,9 @@
 ﻿using GuestApp.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GuestApp.Model
 {
-    public class User :IUser
+    public class User : IUser
     {
         public string Id { get; set; }
         public string Email { get; set; }
@@ -15,6 +13,5 @@ namespace GuestApp.Model
         {
             Events = new List<Event>();
         }
-
     }
 }

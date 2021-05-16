@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace GuestApp.Services
 {
-    public  class EventSelectorService
+    public class EventSelectorService
     {
         private IEventRepository _eventRepository;
         private List<Model.Event> _modelEvents;
@@ -25,16 +25,16 @@ namespace GuestApp.Services
         public ObservableCollection<string> EventsNames
         {
             get
-            { 
+            {
                 _eventsNames = GetEventsNames();
-                return _eventsNames; 
+                return _eventsNames;
             }
         }
-        private  ObservableCollection<string> GetEventsNames()
+        private ObservableCollection<string> GetEventsNames()
         {
             var events = GetListOfEvents();
             var eventsNames = new ObservableCollection<string>();
-            eventsNames.Add("Please select an Event"); 
+            eventsNames.Add("Please select an Event");
 
             foreach (var Event in events)
                 eventsNames.Add(Event.Name);
@@ -52,10 +52,9 @@ namespace GuestApp.Services
             var dtoEvents = new ObservableCollection<DTO.Event>();
 
             foreach (var Event in modelEvents)
-               dtoEvents.Add(Mapper.EventMapper(Event, new DTO.Event()));
+                dtoEvents.Add(Mapper.EventMapper(Event, new DTO.Event()));
 
             return dtoEvents;
         }
-
     }
 }

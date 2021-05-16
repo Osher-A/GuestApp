@@ -10,7 +10,7 @@ namespace GuestApp.Utility.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int numberOfGroups = int.Parse(value.ToString());
-            if ( numberOfGroups >= int.Parse(parameter as string))
+            if (numberOfGroups >= int.Parse(parameter as string))
                 return Visibility.Visible;
             else return Visibility.Collapsed;
         }

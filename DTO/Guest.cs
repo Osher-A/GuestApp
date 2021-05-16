@@ -1,9 +1,6 @@
-﻿using GuestApp.DTO;
-using GuestApp.Interfaces;
+﻿using GuestApp.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-
 
 namespace GuestApp.DTO
 {
@@ -52,8 +49,6 @@ namespace GuestApp.DTO
         }
 
         private string _fullName;
-
-
         public string FullName
         {
             get
@@ -73,16 +68,20 @@ namespace GuestApp.DTO
         public string Zip { get; set; }
         public bool IsFamily { get; set; }
 
-
         public string Initials
         {
             get
             {
-                string initials = "";
-                if (FirstNames.Contains("&"))
-                    initials = GetCouplesInitials();
-                else initials += FirstNames[0];
-                return initials.ToUpper();
+                if (!string.IsNullOrWhiteSpace(FirstNames))
+                {
+                    string initials = "";
+                    if (FirstNames.Contains("&"))
+                        initials = GetCouplesInitials();
+                    else initials += FirstNames[0];
+                    return initials.ToUpper();
+                }
+                else
+                    return null;
             }
         }
 
@@ -150,7 +149,6 @@ namespace GuestApp.DTO
         }
         public List<Event> Events { get; set; } = new List<Event>();
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         //public override bool Equals(object obj)
         //{

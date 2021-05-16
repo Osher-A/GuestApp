@@ -1,8 +1,5 @@
-﻿using GuestApp.DAL;
-using GuestApp.DTO;
-using GuestApp.Services;
+﻿using GuestApp.DTO;
 using GuestApp.ViewModel;
-using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -33,6 +30,11 @@ namespace GuestApp.View
         private void CloseWindow(object sender, EventArgs e)
         {
             base.Close();
+        }
+
+        private void FullListGrid_SelectionChanged()
+        {
+
         }
     }
 }

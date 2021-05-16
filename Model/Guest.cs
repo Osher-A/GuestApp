@@ -31,8 +31,7 @@ namespace GuestApp.Model
 
         public virtual Region Region { get; set; }
 
-        public virtual List<EventGuest> GuestEvents {get; set;}
-
+        public virtual List<EventGuest> GuestEvents { get; set; }
 
         public Guest()
         {

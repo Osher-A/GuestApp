@@ -1,18 +1,14 @@
-﻿using System;
+﻿using GuestApp.Extentions;
+using GuestApp.Utility;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GuestApp.DTO;
-using GuestApp.Extentions;
-using GuestApp.Utility;
 
 namespace GuestApp.Services
 {
     public class CustomizedListService
     {
-        private static ObservableCollection<DTO.Guest> _customizedList = new ObservableCollection<DTO.Guest>(); 
+        private static ObservableCollection<DTO.Guest> _customizedList = new ObservableCollection<DTO.Guest>();
         public static ObservableCollection<DTO.Guest> CustomizedList(object obj)
         {
             var selectedGuests = (IEnumerable<object>)obj;

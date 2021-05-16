@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace GuestApp.Services
@@ -10,7 +7,9 @@ namespace GuestApp.Services
     public interface IUsersMessageService
     {
         void EmptyFieldsAlert();
+
         void GuestExistsElert();
+
         bool UsersEditConfirmation(List<string> changes);
     }
 
@@ -18,10 +17,10 @@ namespace GuestApp.Services
     {
         public void EmptyFieldsAlert()
         {
-            MessageBox.Show("Please fill in all the required fields!", 
+            MessageBox.Show("Please fill in all the required fields!",
                 "Information missing", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-       
+
         public void GuestExistsElert()
         {
             MessageBox.Show("Sorry that address is already used !", "Existing Guest", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -55,6 +54,5 @@ namespace GuestApp.Services
             message += "?";
             return message;
         }
-
     }
 }

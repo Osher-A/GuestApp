@@ -6,7 +6,6 @@ namespace GuestApp.Configurations
 {
     public class GuestConfiguration : IEntityTypeConfiguration<Guest>
     {
-       
         public void Configure(EntityTypeBuilder<Guest> builder)
         {
             builder.Property(g => g.Id)
@@ -34,9 +33,7 @@ namespace GuestApp.Configurations
 
             builder.Property(g => g.Zip)
                 .IsRequired()
-                .HasMaxLength(15); 
-
+                .HasMaxLength(15);
         }
     }
 }
-

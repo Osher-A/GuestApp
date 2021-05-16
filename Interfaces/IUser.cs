@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GuestApp.Interfaces
+﻿namespace GuestApp.Interfaces
 {
     public interface IUser
     {

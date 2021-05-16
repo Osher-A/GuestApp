@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuestApp.Extentions
 {
-     public static class ListExtentions
+    public static class ListExtentions
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list)
         {
@@ -19,7 +14,6 @@ namespace GuestApp.Extentions
                     guestList.Add(guest);
             }
             return guestList;
-
         }
     }
 }
