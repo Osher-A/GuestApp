@@ -9,7 +9,7 @@
         xmlns:converter="clr-namespace:GuestApp.Utility.Converters"
         mc:Ignorable="d"
         Title="Event Selector Window"
-        Height="550" Width="400"
+        Height="520" Width="400"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -21,7 +21,7 @@
             <Style TargetType="Border" x:Key="Border">
                 <Setter Property="DockPanel.Dock" Value="Bottom" />
                 <Setter Property="Width" Value="260" />
-                <Setter Property="Height" Value="280" />
+                <Setter Property="Height" Value="270" />
                 <Setter Property="Margin" Value="0,0,0,50" />
                 <Setter Property="BorderThickness" Value="2" />
                 <Setter Property="BorderBrush" Value="DarkGray" />
@@ -29,7 +29,7 @@
             </Style>
             <Style TargetType="TextBox" x:Key="TextBox">
                 <Setter Property="Width" Value="170" />
-                <Setter Property="Height" Value="45" />
+                <Setter Property="Height" Value="35" />
                 <Setter Property="BorderBrush" Value="Black" />
                 <Setter Property="BorderThickness" Value="2" />
                 <Setter Property="FontSize" Value="20" />
@@ -45,7 +45,7 @@
         Background="WhiteSmoke">
         <DockPanel>
             <TextBlock DockPanel.Dock="Top"
-                       Text="Guest List Organizer"
+                       Text="Event Selector"
                        FontWeight="SemiBold"
                        FontSize="25"
                        HorizontalAlignment="Center"
@@ -87,8 +87,8 @@
                                 Margin="40,30,40,40">
                             <ComboBox x:Name="EventsComboBox"
                                    Width="170"
-                                   Height="45"
-                                  Margin="0,20,0,0"
+                                   Height="35"
+                                  Margin="0,15,0,0"
                                    ItemsSource="{Binding EventsNames}"
                                    SelectedItem="{Binding EventsNames[0], Mode=OneWay}"
                                    Text="{Binding SelectedEvent.Name, Mode=OneWayToSource}"
@@ -101,7 +101,7 @@
                                 </i:Interaction.Triggers>
                             </ComboBox>
                             <Button  Width="170"
-                             Height="45"
+                             Height="35"
                              Margin="0,68,0,0"
                              Content="New Event"
                              FontSize="15"

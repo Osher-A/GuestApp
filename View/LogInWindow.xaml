@@ -61,7 +61,8 @@
         <StackPanel Visibility="{Binding LoginWindowVisibility}">
             <TextBlock Text="Log in" Margin="0,25,0,20" />
             <Label  Content="Email:" />
-                <TextBox  Text="{Binding FireBaseUser.Email, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox  Text="{Binding FireBaseUser.Email, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Press the Return Key to login">
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding LoginCommand}" Key="Return" />
                     </TextBox.InputBindings>
@@ -69,7 +70,8 @@
                 <Label Content="Password:" />
                 <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
-                    pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="Press the Return key to login">
                     <PasswordBox.InputBindings>
                         <KeyBinding Command="{Binding LoginCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
@@ -111,7 +113,9 @@
                 <Label Content="Confirm Password:" />
                 <PasswordBox
                     pb:PasswordBoxAssistant.BindPassword="true"
-                    pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    pb:PasswordBoxAssistant.BoundPassword="{Binding Path=FireBaseUser.Password2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="Press the Return key to Register">
+
                     <PasswordBox.InputBindings>
                         <KeyBinding Command="{Binding RegisterCommand}" Key="Return" />
                     </PasswordBox.InputBindings>
