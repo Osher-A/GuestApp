@@ -14,7 +14,8 @@
 
 ## Built with
 * C#
-* MSSql
-* EntityFramework 
+* .Net Core
+* Sql Server
+* Entity Framework 
 * Wpf/xaml
 
